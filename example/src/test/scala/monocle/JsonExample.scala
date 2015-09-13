@@ -39,14 +39,14 @@ class JsonExample extends MonocleSuite {
   }
 
   test("Use index to go into an JsObject or JsArray") {
-    (jsObject composeOptional index("age") composePrism jsNumber).getOption(json) shouldEqual Some(28)
+    (jsObject ^ index("age") ^ jsNumber).getOption(json) shouldEqual Some(28)
 
-    (jsObject composeOptional index("siblings")
-              composePrism    jsArray
-              composeOptional index(1)
-              composePrism    jsObject
-              composeOptional index("first_name")
-              composePrism    jsString
+    (jsObject ^ index("siblings")
+              ^ jsArray
+              ^ index(1)
+              ^ jsObject
+              ^ index("first_name")
+              ^ jsString
     ).set("Robert Jr.")(json) shouldEqual JsObject(Map(
       "first_name" -> JsString("John"),
       "last_name"  -> JsString("Doe"),
@@ -65,7 +65,7 @@ class JsonExample extends MonocleSuite {
   }
 
   test("Use at to add delete fields") {
-    (jsObject composeLens at("nick_name")).set(Some(JsString("Jojo")))(json) shouldEqual JsObject(Map(
+    (jsObject ^ at("nick_name")).set(Some(JsString("Jojo")))(json) shouldEqual JsObject(Map(
       "first_name" -> JsString("John"),
       "nick_name"  -> JsString("Jojo"), // new field
       "last_name"  -> JsString("Doe"),
@@ -82,7 +82,7 @@ class JsonExample extends MonocleSuite {
       ))
     ))
 
-    (jsObject composeLens at("age")).set(None)(json) shouldEqual JsObject(Map(
+    (jsObject ^ at("age")).set(None)(json) shouldEqual JsObject(Map(
       "first_name" -> JsString("John"),
       "last_name"  -> JsString("Doe"), // John is ageless now
       "siblings"   -> JsArray(List(
@@ -99,9 +99,9 @@ class JsonExample extends MonocleSuite {
   }
 
   test("Use each and filterIndex to modify several fields at a time") {
-    (jsObject composeTraversal filterIndex((_: String).contains("name"))
-              composePrism     jsString
-              composeOptional  headOption
+    (jsObject ^ filterIndex((_: String).contains("name"))
+              ^ jsString
+              ^ headOption
     ).modify(_.toLower)(json) shouldEqual JsObject(Map(
       "first_name" -> JsString("john"), // starts with lower case
       "last_name"  -> JsString("doe"),  // starts with lower case
@@ -119,12 +119,12 @@ class JsonExample extends MonocleSuite {
     ))
 
 
-    (jsObject composeOptional  index("siblings")
-              composePrism     jsArray
-              composeTraversal each
-              composePrism     jsObject
-              composeOptional  index("age")
-              composePrism     jsNumber
+    (jsObject ^ index("siblings")
+              ^ jsArray
+              ^ each
+              ^ jsObject
+              ^ index("age")
+              ^ jsNumber
     ).modify(_ + 1)(json) shouldEqual JsObject(Map(
       "first_name" -> JsString("John"),
       "last_name"  -> JsString("Doe"),
