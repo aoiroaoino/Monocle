@@ -38,7 +38,7 @@ lazy val scalatest  = "org.scalatest"   %% "scalatest"   % "2.2.4"  % "test"
 
 lazy val macroCompat = "org.typelevel" %% "macro-compat" % "1.1.0"
 
-lazy val macroVersion = "2.1.0-M5"
+lazy val macroVersion = "2.1.0"
 lazy val paradisePlugin = compilerPlugin("org.scalamacros" %  "paradise"       % macroVersion cross CrossVersion.full)
 
 def mimaSettings(module: String): Seq[Setting[_]] = mimaDefaultSettings ++ Seq(
