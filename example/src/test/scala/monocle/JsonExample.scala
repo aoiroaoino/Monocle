@@ -41,14 +41,14 @@ class JsonExample extends MonocleSuite {
   }
 
   test("Use index to go into an JsObject or JsArray") {
-    (jsObject composeOptional index("age") composePrism jsNumber).getOption(json) shouldEqual Some(28)
+    (jsObject compose index("age") compose jsNumber).getOption(json) shouldEqual Some(28)
 
-    (jsObject composeOptional index("siblings")
-              composePrism    jsArray
-              composeOptional index(1)
-              composePrism    jsObject
-              composeOptional index("first_name")
-              composePrism    jsString
+    (jsObject compose index("siblings")
+              compose jsArray
+              compose index(1)
+              compose jsObject
+              compose index("first_name")
+              compose jsString
     ).set("Robert Jr.")(json) shouldEqual JsObject(Map(
       "first_name" -> JsString("John"),
       "last_name"  -> JsString("Doe"),

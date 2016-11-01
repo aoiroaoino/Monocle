@@ -45,6 +45,8 @@ abstract class PSetter[S, T, A, B] extends Serializable { self =>
   /** Compose methods between a [[PSetter]] and another Optics */
   /*************************************************************/
 
+  def compose(other: monocle.internal.SetterMagnet[S, T, A, B]): other.ReturnType = other andThen this
+
   /** compose a [[PSetter]] with a [[PSetter]] */
   @inline final def composeSetter[C, D](other: PSetter[A, B, C, D]): PSetter[S, T, C, D] =
     new PSetter[S, T, C, D]{

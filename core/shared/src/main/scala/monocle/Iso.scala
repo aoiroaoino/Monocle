@@ -108,6 +108,8 @@ abstract class PIso[S, T, A, B] extends Serializable { self =>
   /** Compose methods between a [[PIso]] and another Optics */
   /**********************************************************/
 
+  def compose(other: monocle.internal.IsoMagnet[S, T, A, B]): other.ReturnType = other andThen this
+
   /** compose a [[PIso]] with a [[Fold]] */
   @inline final def composeFold[C](other: Fold[A, C]): Fold[S, C] =
     asFold composeFold other

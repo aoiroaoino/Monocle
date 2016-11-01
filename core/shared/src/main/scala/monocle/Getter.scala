@@ -47,6 +47,8 @@ abstract class Getter[S, A] extends Serializable { self =>
   /** Compose methods between a [[Getter]] and another Optics  */
   /*************************************************************/
 
+  def compose(other: monocle.internal.GetterMagnet[S, A]): other.ReturnType = other andThen this
+
   /** compose a [[Getter]] with a [[Fold]] */
   @inline final def composeFold[B](other: Fold[A, B]): Fold[S, B] =
     asFold composeFold other

@@ -84,6 +84,8 @@ abstract class Fold[S, A] extends Serializable { self =>
   /** Compose methods between a [[Fold]] and another Optics */
   /**********************************************************/
 
+  def compose(other: monocle.internal.FoldMagnet[S, A]): other.ReturnType = other andThen this
+
   /** compose a [[Fold]] with a [[Fold]] */
   @inline final def composeFold[B](other: Fold[A, B]): Fold[S, B] =
     new Fold[S, B] {
