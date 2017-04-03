@@ -1,6 +1,6 @@
 package monocle
 
-import monocle.macros.{GenLens, MakeClassy}
+import monocle.macros.{GenLens, MakeClassy, Lenses}
 import shapeless._
 
 
@@ -71,7 +71,7 @@ object Usage {
   } yield l
 
   assert(Foo.str.get(foo) == "foo str")
-  assert(test1.exec(foo) == foo.copy(str = "foobar str"))
+  assert(test1.exec(foo) == foo.copy(str = "foobar st"))
 
   object hoge {
       implicit val foobarHasFoo = new Foo.HasFoo[FooBar] {
@@ -82,3 +82,7 @@ object Usage {
       assert(test1.exec(foobar) == foobar.copy(foo = foobar.foo.copy(str = "foobar str")))
   }
 }
+
+@MakeClassy
+//@Lenses
+case class Nyan(name: String, age: Int)

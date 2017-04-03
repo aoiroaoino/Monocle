@@ -1,0 +1,5 @@
+package monocle
+
+class DerivingPlatedInstance {
+
+}
