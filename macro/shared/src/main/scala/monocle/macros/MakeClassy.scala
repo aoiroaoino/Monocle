@@ -23,9 +23,8 @@ private[macros] class MakeClassyImpl(val c: blackbox.Context) {
     def typeClassDef(tpname: TypeName) = {
       val name = typeClassTypeName(tpname)
       val valName = TermName("__" + name)
-      val tpeName = c.freshName(c.enclosingImpl.name).toTypeName
       q"""
-        trait $name[$tpeName] { def lens: Lens[$tpeName, $tpname] }
+        trait $name[A] { def lens: Lens[A, $tpname] }
         object ${typeClassTermName(tpname)} {
           implicit def $valName: $name[$tpname] = new $name[$tpname] {
             override val lens: Lens[$tpname, $tpname] = Lens.id
