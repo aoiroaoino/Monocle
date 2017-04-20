@@ -6,12 +6,13 @@ import sbtcrossproject.crossProject
 import sbt.Keys._
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 
-lazy val Scala211 = "2.11.8"
+lazy val Scala211 = "2.11.11"
+lazy val Scala212 = "2.12.2"
 
 lazy val buildSettings = Seq(
   organization       := "com.github.julien-truffaut",
-  scalaVersion       := "2.12.1",
-  crossScalaVersions := Seq("2.10.6", Scala211, "2.12.1"),
+  scalaVersion       := Scala212,
+  crossScalaVersions := Seq("2.10.6", Scala211, Scala212),
   scalacOptions     ++= Seq(
     "-deprecation",
     "-encoding", "UTF-8",
