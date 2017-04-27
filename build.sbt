@@ -10,7 +10,7 @@ lazy val Scala211 = "2.11.8"
 
 lazy val buildSettings = Seq(
   organization       := "com.github.julien-truffaut",
-  scalaVersion       := "2.12.1",
+  // scalaVersion       := "2.12.1",
   crossScalaVersions := Seq("2.10.6", Scala211, "2.12.1"),
   scalacOptions     ++= Seq(
     "-deprecation",
@@ -18,17 +18,18 @@ lazy val buildSettings = Seq(
     "-feature",
     "-language:implicitConversions", "-language:higherKinds", "-language:postfixOps",
     "-unchecked",
-    "-Xfatal-warnings",
+    // "-Xfatal-warnings",
     "-Yno-adapted-args",
-    "-Ywarn-dead-code",
-    "-Ywarn-value-discard",
-    "-Xfuture"
+    // "-Ywarn-dead-code",
+    // "-Ywarn-value-discard",
+    // "-Xfuture",
+    "-language:Scala2"
   ) ++ (CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((2, 10)) =>
       Seq("-Yno-generic-signatures") // no generic signatures for scala 2.10.x, see SI-7932, #571 and #828
     case Some((2, n)) if n >= 11 =>
       Seq("-Ywarn-unused-import")
-    case None =>
+    case other =>
       Seq()
   }),
   scalacOptions in (Compile, console) -= "-Ywarn-unused-import",
@@ -116,7 +117,7 @@ lazy val monocleNative = project.in(file(".monocleNative"))
   .aggregate(coreNative, stateNative, testNative)
   .dependsOn(coreNative, stateNative, testNative)
 
-lazy val coreJVM    = core.jvm
+lazy val coreJVM    = core.jvm.enablePlugins(DottyPlugin)
 lazy val coreJS     = core.js
 lazy val coreNative = core.native
 lazy val core       = crossProject(JVMPlatform, JSPlatform, NativePlatform)

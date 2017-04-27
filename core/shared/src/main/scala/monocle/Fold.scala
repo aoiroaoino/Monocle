@@ -188,7 +188,7 @@ sealed abstract class FoldInstances {
       g composeFold f
   }
 
-  implicit def foldUnzip[S]: Unzip[Fold[S, ?]] = new Unzip[Fold[S, ?]] {
+  implicit def foldUnzip[S]: Unzip[({type F[X] = Fold[S, X]})#F] = new Unzip[({type F[X] = Fold[S, X]})#F] {
     override def unzip[A, B](f: Fold[S, (A, B)]): (Fold[S, A], Fold[S, B]) =
       (f composeLens first, f composeLens second)
   }

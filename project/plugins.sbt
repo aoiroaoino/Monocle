@@ -9,5 +9,6 @@ addSbtPlugin("org.scala-native"   % "sbt-crossproject"         % "0.1.0")
 addSbtPlugin("org.scala-native"   % "sbt-scalajs-crossproject" % "0.1.0")
 addSbtPlugin("org.scala-native"   % "sbt-scala-native"         % "0.1.0")
 addSbtPlugin("com.fortysevendeg"  % "sbt-microsites"       % "0.4.0")
+addSbtPlugin("ch.epfl.lamp" % "sbt-dotty" % "0.1.0-RC2")
 
 scalacOptions += "-deprecation"
